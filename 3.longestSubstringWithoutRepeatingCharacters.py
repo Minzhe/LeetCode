@@ -1,11 +1,16 @@
 class Solution:
-    def lengthOfLongestSubstring(self, s: str) -> int:
-        start, max_len = 0, 0
-        char_idx = {}
+    def lengthOfLongestSubstring(self, s):
+        maxlen, start = 0, 0
+        lastseenin = dict()
         for i in range(len(s)):
-            if s[i] in char_idx.keys() and start <= char_idx[s[i]]:
-                start = char_idx[s[i]] + 1
+            if s[i] in lastseenin and lastseenin[s[i]] >= start:
+                start = lastseenin[s[i]] + 1
             else:
-                max_len  = max(max_len, i-start+1)
-            char_idx[s[i]] = i          
-        return max_len
+                maxlen = max(maxlen, i-start+1)
+            lastseenin[s[i]] = i
+        return maxlen
+
+s = 'abcabcbb'
+sol = Solution()
+ans = sol.lengthOfLongestSubstring(s)
+print(ans)
